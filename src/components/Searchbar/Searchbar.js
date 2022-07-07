@@ -12,8 +12,6 @@ function Searchbar({ onSubmit }) {
     setNameImage(value);
   };
 
-
-  
   const handleSubmit = e => {
     e.preventDefault();
     if (nameImage.trim() !== '') {
