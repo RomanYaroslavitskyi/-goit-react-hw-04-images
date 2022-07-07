@@ -1,0 +1,20 @@
+
+.Container {
+  text-align: center;
+}
+.text{
+  font-size: 40px;
+  font-weight: 700;
+}
+
+
+/*
+ * Стили компонента App
+ */
+.App {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 16px;
+  padding-bottom: 24px;
+}
+
