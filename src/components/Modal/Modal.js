@@ -1,46 +1,43 @@
 import PropTypes from 'prop-types';
 import s from './Modal.module.css';
 import { createPortal } from 'react-dom';
-const { Component } = require('react');
+import { useEffect } from 'react';
 
 const modalRoot = document.querySelector('#modal-root');
 const bodyEl = document.querySelector('body');
 
-class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeydown);
+function Modal({ getFind, onClose }) {
+  
+  useEffect(() =>
+  {
+    const handleKeydown = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeydown);
     bodyEl.classList.add('is-hidden');
-  }
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+      bodyEl.classList.remove('is-hidden');
+    };
+  }, [onClose]);
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeydown);
-    bodyEl.classList.remove('is-hidden');
-  }
-
-  handleKeydown = e => {
-    if (e.code === 'Escape') {
-      this.props.onClose();
-    }
-  };
-
-  handleBackdropClick = e => {
+  const handleBackdropClick = e => {
     if (e.target === e.currentTarget) {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  render() {
-    const { getFind } = this.props;
-    const { handleBackdropClick } = this;
-    return createPortal(
-      <div className={s.backdrop} onClick={handleBackdropClick}>
-        <div className={s.content}>
-          <img src={getFind} alt="Name" className={s.img} />
-        </div>
-      </div>,
-      modalRoot
-    );
-  }
+  return createPortal(
+    <div className={s.backdrop} onClick={handleBackdropClick}>
+      <div className={s.content}>
+        <img src={getFind} alt="Name" className={s.img} />
+      </div>
+    </div>,
+    modalRoot
+  );
 }
 
 export default Modal;
