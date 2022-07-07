@@ -29,8 +29,6 @@ function Searchbar({ onSubmit }) {
           </span>
         </button>
 
-        
-        
         <input
           className={s.SearchFormInput}
           value={nameImage}
